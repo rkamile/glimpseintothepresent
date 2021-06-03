@@ -1,0 +1,999 @@
+ServerMeter(s, 8, 8);
+s.reboot;
+s.record(numChannels:8);
+
+ServerOptions. devices;
+(
+s.options.outDevice = "Scarlett 18i20 USB";
+//s.options.outDevice = "Fireface 802 (23784281)";
+s.options.numOutputBusChannels = 8;
+s.options.numInputBusChannels = 0;
+s.reboot;
+)
+
+(
+
+// Evaluate the block below to send test messages to OSCDef (if you do not have an EEG device)
+
+var net = NetAddr.new("127.0.0.1", NetAddr.langPort);
+
+// Adjust these to fit your EEG min and max numbers
+var min = 0;
+var max = 100000;
+
+// Change this to make the test go faster or slower
+var dur = 0.05;
+
+Tdef(\test, {
+	inf.do {
+		net.sendMsg("/1/eeg", rrand(min,max));
+		dur.wait;
+	}
+}).play
+
+)
+
+(
+
+// Create 8 lists to store
+~eeg_list1 = List();
+~eeg_list2 = List();
+~eeg_list3 = List();
+~eeg_list4 = List();
+~eeg_list5 = List();
+~eeg_list6 = List();
+~eeg_list7 = List();
+~eeg_list8 = List();
+~eeg_list9 = List();
+~eeg_list10 = List();
+~eeg_list11 = List();
+~eeg_list12 = List();
+~eeg_list13 = List();
+~eeg_list14 = List();
+
+~eeg1_count = 0;
+~eeg1_count1 = 0;
+~eeg2_count = 0;
+~eeg2_count2 = 0;
+~eeg3_count = 0;
+~eeg3_count3 = 0;
+~eeg4_count = 0;
+~eeg4_count4 = 0;
+~eeg5_count = 0;
+~eeg5_count5 = 0;
+~eeg6_count = 0;
+~eeg6_count6 = 0;
+~eeg7_count = 0;
+~eeg7_count7 = 0;
+~eeg8_count = 0;
+~eeg8_count8 = 0;
+~eeg9_count = 0;
+~eeg10_count = 0;
+~eeg11_count = 0;
+~eeg12_count = 0;
+~eeg13_count = 0;
+~eeg14_count = 0;
+
+
+
+// Store only one sample per second, change this to another number if needed for more or less detail
+~div = 250;
+
+//OSCdef's to print out incoming messages
+OSCdef.new(\get_eeg1,
+	{
+		arg msg, time, addr, port;
+		//[msg, time, addr, port].postln;
+		//msg.postln;
+
+		// If the division remainder is 0 add the sample, otherwise not
+		if(~eeg1_count.mod(~div) == 0, {
+			"First!".postln;
+			msg[1].postln;
+			~eeg_list1.add(msg[1])
+		});
+
+		~eeg1_count = ~eeg1_count + 1;
+
+	}, '/1/eeg'
+);
+
+OSCdef.new(\get_eeg2,
+	{
+		arg msg, time, addr, port;
+		//[msg, time, addr, port].postln;
+		//msg.postln;
+
+		// If the division remainder is 0 add the sample, otherwise not
+		if(~eeg2_count.mod(~div) == 0, {
+			"Second!".postln;
+			msg[1].postln;
+			~eeg_list2.add(msg[1])
+		});
+
+		~eeg2_count = ~eeg2_count + 1;
+
+	}, '/2/eeg'
+);
+
+OSCdef.new(\get_eeg3,
+	{
+		arg msg, time, addr, port;
+		//[msg, time, addr, port].postln;
+		//msg.postln;
+
+		// If the division remainder is 0 add the sample, otherwise not
+		if(~eeg3_count.mod(~div) == 0, {
+			"Third!".postln;
+			msg[1].postln;
+			~eeg_list3.add(msg[1])
+		});
+
+		~eeg3_count = ~eeg3_count + 1;
+
+	}, '/3/eeg'
+);
+
+OSCdef.new(\get_eeg4,
+	{
+		arg msg, time, addr, port;
+		//[msg, time, addr, port].postln;
+		//msg.postln;
+
+		// If the division remainder is 0 add the sample, otherwise not
+		if(~eeg4_count.mod(~div) == 0, {
+			"Fourth!".postln;
+			msg[1].postln;
+			~eeg_list4.add(msg[1])
+		});
+
+		~eeg4_count = ~eeg4_count + 1;
+
+	}, '/4/eeg'
+);
+
+OSCdef.new(\get_eeg5,
+	{
+		arg msg, time, addr, port;
+		//[msg, time, addr, port].postln;
+		//msg.postln;
+
+		// If the division remainder is 0 add the sample, otherwise not
+		if(~eeg5_count.mod(~div) == 0, {
+			"5th!".postln;
+			msg[1].postln;
+			~eeg_list5.add(msg[1])
+		});
+
+		~eeg5_count = ~eeg5_count + 1;
+
+	}, '/5/eeg'
+);
+
+
+OSCdef.new(\get_eeg6,
+	{
+		arg msg, time, addr, port;
+		//[msg, time, addr, port].postln;
+		//msg.postln;
+
+		// If the division remainder is 0 add the sample, otherwise not
+		if(~eeg6_count.mod(~div) == 0, {
+			"6th!".postln;
+			msg[1].postln;
+			~eeg_list6.add(msg[1])
+		});
+
+		~eeg6_count = ~eeg6_count + 1;
+
+	}, '/6/eeg'
+);
+
+OSCdef.new(\get_eeg7,
+	{
+		arg msg, time, addr, port;
+		//[msg, time, addr, port].postln;
+		//msg.postln;
+
+		// If the division remainder is 0 add the sample, otherwise not
+		if(~eeg7_count.mod(~div) == 0, {
+			"7th!".postln;
+			msg[1].postln;
+			~eeg_list7.add(msg[1])
+		});
+
+		~eeg7_count = ~eeg7_count + 1;
+
+	}, '/7/eeg'
+);
+
+OSCdef.new(\get_eeg8,
+	{
+		arg msg, time, addr, port;
+		//[msg, time, addr, port].postln;
+		//msg.postln;
+
+		// If the division remainder is 0 add the sample, otherwise not
+		if(~eeg8_count.mod(~div) == 0, {
+			"8th!".postln;
+			msg[1].postln;
+			~eeg_list8.add(msg[1])
+		});
+
+		~eeg8_count = ~eeg8_count + 1;
+
+	}, '/8/eeg'
+)
+)
+Ndef.clear;
+OSCdef.freeAll;
+
+(
+
+Ndef(\eeg1sound, { |freq=80 ,amp=1|
+	Limiter.ar(LPF.ar(Dust.ar(freq))) * amp
+}).play(0);
+
+Ndef(\eeg1sound).fadeTime = 12;
+
+~eeg1_count1_range = 0;
+
+
+OSCdef.new(\eeg1, {
+
+	arg msg;
+	//var brainwave;
+
+	// if for avoiding information overload
+	if(~eeg1_count1.mod(~div) == 0, {
+
+	// if to check the range
+	if( ((msg[1] < 12) && (msg[1] > 8)) || ((msg[1] > 12.neg) && (msg[1] < 8.neg)), {
+
+			msg[1].postln;
+			Ndef(\eeg1sound).xset(\amp, 0.5);
+			Ndef(\eeg1sound).play(fadeTime: 5);
+
+			~eeg1_count1_range = ~eeg1_count1_range + 1;
+
+			if(((~eeg1_count1_range > 2) && (~eeg1_count1_range < 5))
+			, {
+				"Ndef should change1!".postln;
+
+					Ndef(\eeg1sound, {
+						var freq = msg[1].max(12).min(8);
+						((Mix.ar(BPF.ar(BrownNoise.ar, [freq * 10, freq  * 50, freq * 12], 0.3/[freq * 10, freq  * 50, freq * 12], 5))) * EnvGen.ar(Env.perc((msg[1].max(12).min(8) * 0.000375), 5, 0.8).circle))}); //0.003 - msg[1] * 0.000375
+
+
+			});
+
+			if(((~eeg1_count1_range > 5) && (~eeg1_count1_range < 10)) , {
+				"Ndef should change11!".postln;
+
+				Ndef(\eeg1sound, { |freq=40,amp=0.5|Limiter.ar(RLPF.ar(SinOsc.ar(Ndef.kr(\eeg1mod) * 20 + 155))) * amp });
+				Ndef(\eeg1mod).xset(\freq1, (msg[1].max(12).min(8) * 10)); Ndef(\eeg1mod).xset(\freq2, (msg[1].max(12).min(8) * 3));
+
+				Ndef(\eeg1mod).xset(\freq1, rrand((msg[1].abs * 10), (msg[1].abs * 11)));
+				Ndef(\eeg1mod).xset(\freq2, rrand((msg[1].abs * 9), (msg[1].abs * 11)));
+
+
+			});
+
+			if(((~eeg1_count1_range > 10) && (~eeg1_count1_range < 20)), {
+				"Ndef should change111!".postln;
+
+					Ndef(\eeg1sound, { |amp  = 2|
+					var source = SinOsc.ar(msg[1].abs * 8);
+					var env = EnvFollow.ar(source, 0.3);
+					([source,  env]  * amp)
+
+				});
+			});
+
+			if(((~eeg1_count1_range > 20) && (~eeg1_count1_range <25)), {
+				"Ndef should change1111!".postln;
+
+				Ndef(\eeg1sound, {
+					var freq = msg[1].max(12).min(8);
+					((Mix.ar(BPF.ar(BrownNoise.ar, [freq * 50, freq * 15, freq * 30], 0.5/[freq * 50, freq  * 15, freq * 30], 2 ))) * EnvGen.ar(Env([0, 1, 1, 0], [3, 3, 50, 50], \sine).circle))});
+
+				});
+
+				if(((~eeg1_count1_range > 25) && (~eeg1_count1_range <30)), {
+
+				"Ndef should change11111!".postln;
+				SynthDef(\gbman, {
+				|out=0, amp=0.3, freq=100, pan=0.0, atk=1.1, dec=0.5, sus=1.0, rel=0.5, gate=1, mod=0.5,
+				lop=18000, loprq=1|
+				var env, sig;
+				env = EnvGen.kr(Env.adsr(atk, dec, sus, rel), gate, doneAction:2);
+				sig = Saw.ar(Lag.ar(GbmanL.ar(freq/4).range(freq/2,freq)));
+				sig = BBandStop.ar(sig, freq * 2, 2);
+				sig = RLPF.ar(sig, lop, loprq);
+				sig = Pan2.ar(sig * env, pan) * amp;
+				OffsetOut.ar(out, sig);
+				}).add();
+
+				Pdef(\eeg1sound, Pbind(\instrument, \gbman,
+					\sus, 0.62, \rel, 1.2, \atk, 0.37, \modFreq, 94, \dec, 0.29, \curve, 0.5,
+					\freq, 200, // msg[1].max(12).min(8) * [5, 70].choose,
+					\amp, Pn(Penv([0.001, 0.1, 0.0001] ,[15, 15], 'exp'), inf),
+					\dur,  Pbrown(0.15, 0.4, 0.002) // msg[1].max(12).min(8) * 0.05
+				)).play;
+
+				Pdef(\eeg1sound).fadeTime = 5;
+				Pdef(\eeg1sound).xset(\amp, 0)
+			});
+
+
+			if(~eeg1_count1_range > 30, {
+
+					"Ndef should change111111!".postln;
+				Ndef(\eeg1sound, { |freq=41,amp=1|
+					Limiter.ar(LPF.ar(Trig1.ar(Pulse.ar(freq) ))) * amp
+				});
+
+				~eeg1_count1_range = 0;
+			});
+
+	}, { Ndef(\eeg1sound).xset(\amp, 0); });  //gated envelope instead of 0
+	});
+	~eeg1_count1 = ~eeg1_count1 + 1;
+
+}, '/1/eeg');
+)
+
+(
+Ndef(\eeg2sound, { |freq=80,amp=1|
+	Limiter.ar(LPF.ar(Dust.ar(freq))) * amp
+}).play(1);
+
+Ndef(\eeg2sound).fadeTime = 4;
+
+~eeg2_count2_range = 0;
+
+OSCdef.new(\eeg2, {
+	arg msg;
+
+	// if for avoiding information overload
+	if(~eeg2_count2.mod(~div) == 0, {
+
+	// if to check the range
+	if( ((msg[1] < 12) && (msg[1] > 8)) || ((msg[1] > 12.neg) && (msg[1] < 8.neg)), {
+
+			msg[1].postln;
+			Ndef(\eeg2sound).xset(\amp, 0.5);
+			Ndef(\eeg2sound).play(fadeTime: 5);
+
+			~eeg2_count2_range = ~eeg2_count2_range + 1;
+
+			if(((~eeg2_count2_range > 2) && (~eeg2_count2_range < 5))
+			, {
+				"Ndef should change2!".postln;
+
+					Ndef(\eeg2sound, {
+						var freq = msg[1].max(12).min(8);
+						((Mix.ar(BPF.ar(BrownNoise.ar, [freq * 13, freq  * 15, freq * 30], 0.3/[freq * 3, freq  * 20, freq * 30], 5))) * EnvGen.ar(Env.perc((msg[1].abs * 0.000375), 50, 0.8).circle))}); //0.003 - msg[1] * 0.000375
+
+					Ndef(\eeg2sound).xset(\freq, rrand((msg[1].abs * 10), (msg[1].abs * 11)));
+
+			});
+
+			if(((~eeg2_count2_range > 5) && (~eeg2_count2_range < 10)) , {
+				"Ndef should change22!".postln;
+
+				Ndef(\eeg2sound, { |freq=402,amp=1|
+					Limiter.ar(RLPF.ar(SinOsc.ar(Ndef.kr(\eeg2mod) * 10))) * amp
+				});
+				Ndef(\eeg2mod).xset(\freq1, (msg[1].max(12).min(8)* 5)); Ndef(\eeg2mod).xset(\freq2, (msg[1].max(8).min(12) * 4));
+
+			});
+
+				if(((~eeg2_count2_range > 10) && (~eeg2_count2_range < 15)), {
+				"Ndef should change222!".postln;
+				Ndef(\eeg2sound, { |freq=40,amp=1|
+					Limiter.ar(BPF.ar(Saw.ar, freq, 0.9/freq *1.1 )) * amp
+				}).play;
+			});
+
+			if(((~eeg2_count2_range > 15) && (~eeg2_count2_range < 16)), {
+
+					"Ndef should change2222!".postln;
+				SynthDef(\gbman, {
+				|out=1, amp=0.3, freq=100, pan=0.0, atk=1.1, dec=0.5, sus=1.0, rel=0.5, gate=1, mod=0.5,
+				lop=18000, loprq=1|
+				var env, sig;
+				env = EnvGen.kr(Env.adsr(atk, dec, sus, rel), gate, doneAction:2);
+				sig = Saw.ar(Lag.ar(GbmanL.ar(freq/4).range(freq/2,freq)));
+				sig = BBandStop.ar(sig, freq * 2, 2);
+				sig = RLPF.ar(sig, lop, loprq);
+				sig = Pan2.ar(sig * env, pan) * amp;
+				OffsetOut.ar(out, sig);
+				}).add();
+
+				Pdef(\eeg2sound, Pbind(\instrument, \gbman,
+					\sus, 0.62, \rel, 1.2, \atk, 0.37, \modFreq, 94, \dec, 0.29, \curve, 0.5,
+					\freq, msg[1].max(12).min(8) * [5, 70].choose,
+					\amp, Pn(Penv([0.001, 0.1, 0.0001] ,[15, 15], 'exp'), inf),
+					\dur, msg[1].max(12).min(8) * 0.05 //Pbrown(0.15, 0.4, 0.002)
+				)).play;
+
+				Pdef(\eeg2sound).fadeTime = 5;
+				Pdef(\eeg2sound).xset(\amp, 0)
+			});
+
+
+			if(((~eeg2_count2_range > 16) && (~eeg2_count2_range < 25)), {
+
+					"Ndef should change22222!".postln;
+				Ndef(\eeg2sound, { |amp  = 2|
+					var source = SinOsc.ar(msg[1].abs * 7.2);
+					var env = EnvFollow.ar(source, 0.3);
+					([source,  env]  * amp)
+				});
+			});
+				if(((~eeg2_count2_range > 25) && (~eeg2_count2_range < 30)), {
+
+					"Ndef should change222222!".postln;
+				Ndef(\eeg2sound, { |amp  = 2|
+					var source = SinOsc.ar(msg[1].abs * 7.2);
+					var env = Formlet.ar(EnvFollow.ar(source, 0.3));
+					([source,  env]  * amp)
+				});
+			});
+
+				if(~eeg2_count2_range > 30, {
+
+				"Ndef should change2222222!".postln;
+
+			Ndef(\eeg2sound, {
+					var freq = msg[1].max(12).min(8);
+					((Mix.ar(BPF.ar(BrownNoise.ar, [freq * 14, freq * 15, freq * 20], 0.5/[freq * 14, freq  * 15, freq * 20], 1 ))) * EnvGen.ar(Env([0, 1, 1, 0], [3, 3, 30, 15], \sine).circle))});
+
+					~eeg2_count2_range = 0;
+			});
+
+	}, { Ndef(\eeg2sound).xset(\amp, 0); });
+	});
+	~eeg2_count2 = ~eeg2_count2 + 1;
+
+}, '/2/eeg');
+)
+
+(
+Ndef(\eeg3sound, { |freq=200,amp=1, env|
+	Limiter.ar(RLPF.ar(Dust.ar(freq))) * amp
+}).play(2);
+
+Ndef(\eeg3sound).fadeTime = 2;
+
+~eeg3_count3_range = 0;
+
+OSCdef.new(\eeg3, {
+	arg msg;
+
+	// if for avoiding information overload
+	if(~eeg3_count3.mod(~div) == 0, {
+
+	// if to check the range
+	if( ((msg[1] < 12) && (msg[1] > 8)) || ((msg[1] > 12.neg) && (msg[1] < 8.neg)), {
+
+			msg[1].postln;
+			Ndef(\eeg3sound).xset(\amp, 0.5);
+			Ndef(\eeg3sound).play(fadeTime: 5);
+
+			~eeg3_count3_range = ~eeg3_count3_range + 1;
+
+			if(((~eeg3_count3_range > 2) && (~eeg3_count3_range < 5))
+			, {
+				"Ndef should change3!".postln;
+
+					Ndef(\eeg3sound, {
+						var freq = msg[1].max(12).min(8);
+						((Mix(BPF.ar(BrownNoise.ar, [freq * 12, freq  * 15, freq *20], 0.3/[freq * 12, freq  * 10, freq * 30], 2))) * EnvGen.ar(Env.perc((freq * 0.000375), 50, 0.8).circle))});
+
+			});
+
+			if(((~eeg3_count3_range > 5) && (~eeg3_count3_range < 10)) , {
+				"Ndef should change33!".postln;
+
+
+				Ndef(\eeg3sound, {
+					var freq = msg[1].max(12).min(8);
+					((Mix.ar(BPF.ar(BrownNoise.ar, [freq * 25, freq * 15, freq * 30], 0.5/[freq * 25, freq  * 15, freq * 30], 2 ))) * EnvGen.ar(Env([0, 1, 1, 0], [3, 3, 50, 50], \sine).circle))});
+
+			});
+
+				if(((~eeg3_count3_range > 10) && (~eeg3_count3_range < 15)), {
+				"Ndef should change333!".postln; //bad vallues?
+				Ndef(\eeg3sound, { |freq=200,amp=0.7|
+					var env;
+					env = EnvGen.ar(Env([0, 1, 1, 0], [3, 3, 50], \sine).circle);
+					Limiter.ar(RLPF.ar(SinOsc.ar, freq, 0.3/freq * 0.7 )) * amp * env
+				});
+			});
+
+
+			if(((~eeg3_count3_range > 15 & ~eeg3_count3_range < 20)), {
+
+
+				"Ndef should change3333!".postln;
+
+				SynthDef(\gbman, {
+				|out=0, amp=0.3, freq=100, pan=0.0, atk=1.1, dec=0.5, sus=1.0, rel=0.5, gate=1, mod=0.5,
+				lop=18000, loprq=1|
+				var env, sig;
+				env = EnvGen.kr(Env.adsr(atk, dec, sus, rel), gate, doneAction:2);
+				sig = Saw.ar(Lag.ar(GbmanL.ar(freq/4).range(freq/2,freq)));
+				sig = BBandStop.ar(sig, freq * 2, 2);
+				sig = RLPF.ar(sig, lop, loprq);
+				sig = Pan2.ar(sig * env, pan) * amp;
+				OffsetOut.ar(out, sig);
+				}).add();
+
+				Pdef(\eeg3sound, Pbind(\instrument, \gbman,
+					\sus, 0.62, \rel, 1.2, \atk, 0.37, \modFreq, 94, \dec, 0.29, \curve, 0.5,
+					\freq, msg[1].max(12).min(8) * [5, 70].choose,
+					\amp, Pn(Penv([0.001, 0.1, 0.0001] ,[15, 15], 'exp'), inf),
+					\dur,  msg[1].max(12).min(8) * 0.05 //Pbrown(0.15, 0.4, 0.002)
+				)).play;
+
+				Pdef(\eeg3sound).fadeTime = 5;
+				Pdef(\eeg3sound).xset(\amp, 0)
+			});
+
+
+				if(~eeg3_count3_range > 20, {
+
+				"Ndef should change33333!".postln;
+
+					Ndef(\eeg3sound, { |freq=41,amp=1|
+					Limiter.ar(Trig1.ar(Pulse.ar(freq) )) * amp
+				});
+
+				~eeg3_count3_range = 0;
+			});
+
+
+	}, { Ndef(\eeg3sound).xset(\amp, 0); });
+	});
+	~eeg3_count3 = ~eeg3_count3 + 1;
+
+}, '/3/eeg');
+)
+
+
+(
+Ndef(\eeg4sound, { |freq=200,amp=1, env|
+	Limiter.ar(BRF.ar(Dust.ar, freq, 0.5/freq * 20) ) * amp
+}).play(3);
+
+Ndef(\eeg4sound).fadeTime = 6;
+
+~eeg4_count4_range = 0;
+
+OSCdef.new(\eeg4, {
+	arg msg;
+
+	// if for avoiding information overload
+	if(~eeg4_count4.mod(~div) == 0, {
+
+	// if to check the range
+	if( ((msg[1] < 12) && (msg[1] > 8)) || ((msg[1] > 12.neg) && (msg[1] < 8.neg)), {
+
+			msg[1].postln;
+			Ndef(\eeg4sound).xset(\amp, 0.5);
+			Ndef(\eeg4sound).play(fadeTime: 5);
+
+			~eeg4_count4_range = ~eeg4_count4_range + 1;
+
+			if(((~eeg4_count4_range > 2) && (~eeg4_count4_range < 5))
+			, {
+				"Ndef should change4!".postln;
+
+
+				Ndef(\eeg4sound, {
+						var freq = msg[1].max(12).min(8);
+						((Mix(BPF.ar(BrownNoise.ar, [freq * 17, freq  * 15, freq * 30], 0.3/[freq * 17, freq  * 15, freq * 30], 4))) * EnvGen.ar(Env.perc(0.003, 20, 0.8).circle))});
+
+			});
+
+			if(((~eeg4_count4_range > 5) && (~eeg4_count4_range < 6)), {
+				"Ndef should change44!".postln;
+				Ndef(\eeg4sound, { |freq=1002,amp=1|
+					Limiter.ar(RLPF.ar(SinOsc.ar, freq, 0.356/freq * 0.6 )) * amp
+				});
+			});
+
+				if(((~eeg4_count4_range > 6) && (~eeg4_count4_range < 10)), {
+				"Ndef should change444!".postln;
+				Ndef(\eeg4sound, { |amp  = 2|
+					var source = SinOsc.ar(msg[1].abs * 6);
+					var env = EnvFollow.ar(source, 0.3);
+					([source,  env]  * amp)
+				});
+			});
+
+			if(((~eeg4_count4_range > 10) && (~eeg4_count4_range < 15)), {
+				"Ndef should change4444!".postln;
+				Ndef(\eeg4sound, { |freq=41,amp=1|
+					Limiter.ar(LPF.ar(Trig1.ar(Pulse.ar(freq) ))) * amp
+				});
+			});
+
+			if(~eeg4_count4_range > 15, {
+				"Ndef should change44444!".postln;
+
+			Ndef(\eeg4sound, {
+					var freq = msg[1].max(12).min(8);
+					((Mix.ar(BPF.ar(BrownNoise.ar, [freq * 25, freq * 15, freq * 30], 0.5/[freq * 25, freq  * 15, freq * 30], 2 ))) * EnvGen.ar(Env([0, 1, 1, 0], [3, 3, 50, 50], \sine).circle))});
+
+				~eeg4_count4_range = 0;
+			});
+
+
+	}, { Ndef(\eeg4sound).xset(\amp, 0); });
+	});
+	~eeg4_count4 = ~eeg4_count4 + 1;
+
+}, '/4/eeg');
+)
+
+(
+Ndef(\eeg5sound, {
+	var freq=200;
+	var amp=1;
+	var env;
+	Limiter.ar(RLPF.ar(Dust.ar(200, 0.5), freq, 0.5/freq * 2)) * amp
+}).play(4);
+
+Ndef(\eeg5sound).fadeTime = 8;
+
+~eeg5_count5_range = 0;
+
+OSCdef.new(\eeg5, {
+	arg msg;
+
+	// if for avoiding information overload
+	if(~eeg5_count5.mod(~div) == 0, {
+
+	// if to check the range
+	if( ((msg[1] < 12) && (msg[1] > 8)) || ((msg[1] > 12.neg) && (msg[1] < 8.neg)), {
+
+			msg[1].postln;
+			Ndef(\eeg5sound).xset(\amp, 0.5);
+			Ndef(\eeg5sound).play(fadeTime: 5);
+
+			~eeg5_count5_range = ~eeg5_count5_range + 1;
+
+			if(((~eeg5_count5_range > 2) && (~eeg5_count5_range < 5))
+			, {
+				"Ndef should change5!".postln;
+				Ndef(\eeg5sound, {
+					var freq = msg[1].max(12).min(8);
+					((Mix.ar(BPF.ar(BrownNoise.ar, [freq * 15, freq * 15, freq * 30], 0.5/[freq * 15, freq  * 15, freq * 30], 2 )))
+					* EnvGen.ar(Env([0, 1, 1, 0], [3, 3, 30, 30], \sine).circle))})
+			});
+
+			if(((~eeg5_count5_range > 5) && (~eeg5_count5_range < 10)), {
+				"Ndef should change55!".postln;
+				Ndef(\eeg5sound, { |freq=82,amp=1|
+					Limiter.ar(RLPF.ar(SinOsc.ar(freq) )) * amp
+				});
+			});
+
+			if(((~eeg5_count5_range > 10) && (~eeg5_count5_range < 15)), {
+				"Ndef should change555!".postln;
+				Ndef(\eeg5sound, { |amp  = 1.5|
+					var source = SinOsc.ar(msg[1].abs * 8);
+					var env = Ringz.ar(EnvFollow.ar(source, 0.3));
+					([source,  env]  * amp)
+
+				});
+			});
+
+			if(((~eeg5_count5_range > 15) && (~eeg5_count5_range < 20)), {
+				"Ndef should change5555!".postln;
+					Ndef(\eeg5sound, { |amp  = 1.5|
+					var source = SinOsc.ar(msg[1].abs * [4.5, 10].choose);
+					var env = EnvFollow.ar(source, 0.3);
+					([source,  env]  * amp)
+				});
+			});
+
+
+				if(~eeg5_count5_range > 20 , {
+				"Ndef should change55555!".postln;
+				Ndef(\eeg5sound, { |freq=40,amp=1|
+					Limiter.ar(RLPF.ar(Saw.ar(freq) )) * amp
+				});
+				~eeg5_count5_range = 0;
+			});
+	}, { Ndef(\eeg5sound).xset(\amp, 0); });
+	});
+	~eeg5_count5 = ~eeg5_count5 + 1;
+
+}, '/5/eeg');
+)
+
+
+
+
+(
+Ndef(\eeg6sound, { |freq=2000,amp=1|
+	Limiter.ar(LPF.ar(Dust.ar(freq, 1), freq, 0.9/freq)) * amp
+}).play(5);
+
+Ndef(\eeg6sound).fadeTime = 2;
+
+~eeg6_count6_range = 0;
+
+OSCdef.new(\eeg6, {
+	arg msg;
+
+	// if for avoiding information overload
+	if(~eeg6_count6.mod(~div) == 0, {
+
+	// if to check the range
+	if( ((msg[1] < 12) && (msg[1] > 8)) || ((msg[1] > 12.neg) && (msg[1] < 8.neg)), {
+
+			msg[1].postln;
+			Ndef(\eeg6sound).xset(\amp, 0.5);
+			Ndef(\eeg6sound).play(fadeTime: 5);
+
+			~eeg6_count6_range = ~eeg6_count6_range + 1;
+
+			if(((~eeg6_count6_range > 2) && (~eeg6_count6_range < 5))
+			, {
+				"Ndef should change6!".postln;
+
+				Ndef(\eeg6sound, {
+				var freq = msg[1].max(12).min(8);
+				((Mix.ar(BPF.ar(BrownNoise.ar, [freq * 35, freq * 25, freq * 18], 0.5/[freq * 35, freq  * 25, freq * 18], 2 ))) * EnvGen.ar(Env([0, 1, 1, 0], [3, 3, 50, 10], \sine).circle))})
+
+			});
+
+			if(((~eeg6_count6_range > 5) && (~eeg6_count6_range < 10)), {
+				"Ndef should change66!".postln;
+				Ndef(\eeg6sound, { |freq=1002,amp=1|
+					Limiter.ar(RLPF.ar(SinOsc.ar(freq) )) * amp
+				});
+
+			});
+
+		if(((~eeg6_count6_range > 10) && (~eeg6_count6_range < 15)) , {
+				"Ndef should change666!".postln;
+				Ndef(\eeg6sound, { |freq=39,amp=1|
+					Limiter.ar(RLPF.ar(Saw.ar(freq) )) * amp
+				});
+			});
+
+				if(((~eeg6_count6_range > 15) && (~eeg6_count6_range < 20)) , {
+				"Ndef should change6666!".postln;
+					Ndef(\eeg6sound, { |amp  = 2.5|
+					var source = SinOsc.ar(msg[1].abs * 9);
+					var env = EnvFollow.ar(source, 0.2);
+					([source,  env]  * amp)
+					//[source, env];
+
+				});
+			});
+				if(((~eeg6_count6_range > 20) && (~eeg6_count6_range < 25)) , {
+				"Ndef should change66666!".postln;
+				Ndef(\eeg6sound, { |amp  = 2|
+					var source = SinOsc.ar(msg[1].abs * 8);
+					var env = EnvFollow.ar(source, 0.3);
+					([source,  env]  * amp)
+					//[source, env];
+
+
+				});
+			});
+				if(((~eeg6_count6_range > 25) && (~eeg6_count6_range < 30)) , {
+				"Ndef should change666666!".postln;
+				Ndef(\eeg6sound, { |freq=39,amp=1|
+					Limiter.ar(RLPF.ar(Saw.ar(freq) )) * amp
+				});
+			});
+
+			    if(~eeg6_count6_range > 30, {
+				"Ndef should change6666666!".postln;
+				Ndef(\eeg6sound, { |amp  = 2|
+					var source = SinOsc.ar(msg[1].abs * 8);
+					var env = EnvFollow.ar(source, 0.3);
+					([source,  env]  * amp)
+				});
+
+				~eeg6_count6_range = 0;
+			});
+	}, { Ndef(\eeg6sound).xset(\amp, 0); });  //gated envelope instead of 0
+	});
+	~eeg6_count6 = ~eeg6_count6 + 1;
+
+}, '/6/eeg');
+)
+
+
+(
+Ndef(\eeg7sound, { |freq=200,amp=1, env|
+	Limiter.ar(LPF.ar(Dust.ar, freq, 0.666/freq)) * amp
+}).play(6);
+
+Ndef(\eeg7sound).fadeTime = 4;
+
+~eeg7_count7_range = 0;
+
+OSCdef.new(\eeg7, {
+	arg msg;
+
+	// if for avoiding information overload
+	if(~eeg7_count7.mod(~div) == 0, {
+
+	// if to check the range
+	if( ((msg[1] < 12) && (msg[1] > 8)) || ((msg[1] > 12.neg) && (msg[1] < 8.neg)), {
+
+			msg[1].postln;
+			Ndef(\eeg7sound).xset(\amp, 0.5);
+			Ndef(\eeg7sound).play(fadeTime: 5);
+
+			~eeg7_count7_range = ~eeg7_count7_range + 1;
+
+			if(((~eeg7_count7_range > 2) && (~eeg7_count7_range < 5))
+			, {
+				"Ndef should change7!".postln;
+
+					Ndef(\eeg7sound, {
+					var freq = msg[1].max(12).min(8), amp;
+					Limiter.ar(RLPF.ar(SinOsc.ar(Ndef.kr(\eeg7mod) * 30 + 55))) * amp
+				});
+					Ndef(\eeg7mod, {Prand((LFCub.kr([1.8, 1.1, 4.2, 2, 4.6, 1, 1.9999, 3.5421])), 30)});
+			});
+
+			if(((~eeg7_count7_range > 5) && (~eeg7_count7_range < 10)), {
+				"Ndef should change77!".postln;
+					Ndef(\eeg7sound, {
+					var freq = msg[1].max(12).min(8);
+					((Mix.ar(BPF.ar(BrownNoise.ar, [freq * 15.9, freq * 15, freq * 30], 0.5/[freq * 15.9, freq  * 15, freq * 30], 2 ))) * EnvGen.ar(Env([0, 1, 1, 0], [3, 3, 30, 15], \sine).circle))});
+			});
+
+			if(((~eeg7_count7_range > 10) && (~eeg7_count7_range < 15)), {
+				"Ndef should change777!".postln;
+					Ndef(\eeg7sound, {
+					var freq = msg[1].max(12).min(8);
+					((Mix.ar(BPF.ar(BrownNoise.ar, [freq * 18, freq  * 15, freq * 30], 0.3/[freq * 100, freq  * 2000, freq * 30], 2))) * EnvGen.ar(Env.perc(0.03, 5, 0.8).circle))}); //0.003 - msg[1] * 0.000375
+			});
+
+
+			if(((~eeg7_count7_range > 15) && (~eeg7_count7_range < 16)), {
+				"Ndef should change7777!".postln;
+				Ndef(\eeg7sound, { |amp  = 2|
+					var source = SinOsc.ar(msg[1].abs * 6.7);
+					var env = EnvFollow.ar(source, 0.21);
+					([source,  env]  * amp)
+				});
+			});
+
+				if(((~eeg7_count7_range > 15) && (~eeg7_count7_range < 20)), {
+				"Ndef should change77777!".postln;
+					Ndef(\eeg7sound, { |amp  = 1.5|
+					var source = SinOsc.ar(msg[1].abs * 8);
+					var env = EnvFollow.ar(source, 0.54);
+					([source,  env]  * amp)
+				});
+
+			});
+
+					if(((~eeg7_count7_range > 20) && (~eeg7_count7_range < 25)), {
+				"Ndef should change777777!".postln;
+					Ndef(\eeg7sound, { |amp  = 1.5|
+					var source = SinOsc.ar(msg[1].abs * [5.8, 9.4].choose);
+					var env = Resonz.ar(EnvFollow.ar(source, 0.333));
+					([source,  env]  * amp)
+				});
+
+			});
+
+					if(((~eeg7_count7_range > 25) && (~eeg7_count7_range < 30)), {
+				"Ndef should change7777777!".postln;
+					Ndef(\eeg7sound, { |amp  = 0.1|
+					var source = SinOsc.ar(msg[1].abs * [5.8, 9.4].choose);
+					var env = Ringz.ar(EnvFollow.ar(source, 0.3));
+					([source,  env]  * amp)
+				});
+
+			});
+
+			 if(~eeg7_count7_range > 30, {
+
+				"Ndef should change7(8)!".postln;
+					Ndef(\eeg7sound, {
+					var freq = msg[1].max(12).min(8);
+					((Mix.ar(BPF.ar(BrownNoise.ar, [freq * 18, freq  * 15, freq * 30], 0.3/[freq * 100, freq  * 2000, freq * 30], 2))) * EnvGen.ar(Env.perc(msg[1].abs * 0.000375, 5, 0.8).circle))}); //0.003 - msg[1] * 0.000375
+
+				~eeg7_count7_range = 0;
+			});
+
+
+
+	}, { Ndef(\eeg7sound).xset(\amp, 0); });  //gated envelope instead of 0
+	});
+	~eeg7_count7 = ~eeg7_count7 + 1;
+
+}, '/7/eeg');
+)
+
+
+(
+Ndef(\eeg8sound, { |freq=200,amp=1, env|
+	Limiter.ar(RLPF.ar(Dust.ar, freq, 0.88/freq)) * amp
+}).play(7);
+
+Ndef(\eeg8sound).fadeTime = 12;
+
+~eeg8_count8_range = 0;
+
+OSCdef.new(\eeg8, {
+	arg msg;
+
+	// if for avoiding information overload
+	if(~eeg8_count8.mod(~div) == 0, {
+
+	// if to check the range
+	if( ((msg[1] < 12) && (msg[1] > 8)) || ((msg[1] > 12.neg) && (msg[1] < 8.neg)), {
+
+			msg[1].postln;
+			Ndef(\eeg8sound).xset(\amp, 0.5);
+			Ndef(\eeg8sound).play(fadeTime: 5);
+
+			~eeg8_count8_range = ~eeg8_count8_range + 1;
+
+			if(((~eeg8_count8_range > 2) && (~eeg8_count8_range < 5))
+			, {
+				"Ndef should change8!".postln;
+
+				Ndef(\eeg8sound, {
+				var freq = msg[1].max(12).min(8);
+				((Mix.ar(BPF.ar(BrownNoise.ar, [freq * 10, freq  * 15, freq * 30], 0.3/[freq * 100, freq  * 2000, freq * 30], 5))) * EnvGen.ar(Env.perc(0.003, 5, 0.8).circle))});
+
+			});
+
+			if(((~eeg8_count8_range > 5) && (~eeg8_count8_range < 10))
+				,{
+				"Ndef should change88!".postln;
+
+					Ndef(\eeg8sound, {
+						var freq = msg[1].max(12).min(8);
+						((Mix.ar(BPF.ar(BrownNoise.ar, [freq * 10, freq * 15, freq * 30], 0.5/[freq * 10, freq  * 15, freq * 30], 2 ))) * EnvGen.ar(Env([0, 1, 1, 0], [3, 3, 30, 10], \sine).circle))})
+
+			});
+
+			if(((~eeg8_count8_range > 10) && (~eeg8_count8_range > 15)), {
+				"Ndef should change888!".postln;
+
+				Ndef(\eeg8sound, { |freq=40,amp=1|
+					Limiter.ar(RLPF.ar(Saw.ar(freq) )) * amp
+				});
+			});
+
+					if(~eeg8_count8_range > 15, {
+				"Ndef should change8888!".postln;
+
+					Ndef(\eeg8sound, { |amp  = 2.5|
+					var source = SinOsc.ar(msg[1].abs * 13);
+					var env = EnvFollow.ar(source, 0.2);
+					([source,  env]  * amp)
+					//[source, env];
+
+				});
+				~eeg8_count8_range = 0;
+			});
+
+
+	}, { Ndef(\eeg8sound).xset(\amp, 0); });
+	});
+	~eeg8_count8 = ~eeg8_count8 + 1;
+
+}, '/8/eeg');
+)
+
+
